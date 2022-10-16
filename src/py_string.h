@@ -26,6 +26,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "error.h"
 #include "hints.h"
 #include "logging.h"
 #include "mem.h"

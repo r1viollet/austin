@@ -37,7 +37,11 @@ static uintptr_t _pthread_buffer[PTHREAD_BUFFER_ITEMS];
   (copy_memory(pid, addr, sizeof(_pthread_buffer), _pthread_buffer))
 
 
+typedef pid_t proc_ref_t;
+
+
 struct _proc_extra_info {
+  pid_t        proc_ref;
   unsigned int page_size;
   char         statm_file[24];
   pthread_t    wait_thread_id;

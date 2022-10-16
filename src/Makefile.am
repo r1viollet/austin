@@ -20,7 +20,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http:#www.gnu.org/licenses/>.
 
-AM_CFLAGS = -I$(srcdir) -Wall -pthread
+AM_CFLAGS = -I$(srcdir) -I$(srcdir)/../include -Wall -pthread
 OPT_FLAGS = -O3
 STRIP_FLAGS = -Os -s
 
@@ -38,6 +38,8 @@ endif
 man_MANS = austin.1
 
 bin_PROGRAMS = austin
+
+noinst_LTLIBRARIES = libaustin.la
 
 # ---- Austin ----
 
@@ -64,3 +66,9 @@ austinp_SOURCES = $(austin_SOURCES)
 austinp_CFLAGS = $(austin_CFLAGS) @AUSTINP_CFLAGS@
 austinp_LDADD = @AUSTINP_LDADD@
 endif
+
+
+# ---- libaustin ----
+
+libaustin_la_CFLAGS = $(austin_CFLAGS) -DLIBAUSTIN
+libaustin_la_SOURCES = $(austin_SOURCES)

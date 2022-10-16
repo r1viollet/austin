@@ -5,7 +5,7 @@
 //
 // Austin is a Python frame stack sampler for CPython.
 //
-// Copyright (c) 2018 Gabriele N. Tornetta <phoenix1987@gmail.com>.
+// Copyright (c) 2018-2022 Gabriele N. Tornetta <phoenix1987@gmail.com>.
 // All rights reserved.
 //
 // This program is free software: you can redistribute it and/or modify
@@ -20,19 +20,18 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef AUSTIN_H
-#define AUSTIN_H
+#pragma once
 
-#ifdef NATIVE
-#define PROGRAM_NAME                    "austinp"
-#else
-#define PROGRAM_NAME                    "austin"
-#endif
-/* [[[cog
-from scripts.utils import get_current_version_from_changelog as version
-print(f'#define VERSION                         "{version()}"')
-]]] */
-#define VERSION                         "3.4.0"
-// [[[end]]]
+#include "py_string.h"
 
-#endif // AUSTIN_H
+#define _code__get_filename(self, pid, py_v) \
+  _string_from_raddr(pid, *((void **)((void *)self + py_v->py_code.o_filename)), py_v)
+
+#define _code__get_name(self, pid, py_v) \
+  _string_from_raddr(pid, *((void **)((void *)self + py_v->py_code.o_name)), py_v)
+
+#define _code__get_qualname(self, pid, py_v) \
+  _string_from_raddr(pid, *((void **)((void *)self + py_v->py_code.o_qualname)), py_v)
+
+#define _code__get_lnotab(self, pid, len, py_v) \
+  _bytes_from_raddr(pid, *((void **)((void *)self + py_v->py_code.o_lnotab)), len, py_v)

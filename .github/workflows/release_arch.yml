@@ -42,9 +42,14 @@ jobs:
             musl-gcc -O3 -Os -s -Wall -pthread *.c -o austin -D__MUSL__
             tar -Jcf austin-$VERSION-musl-linux-${{ matrix.arch }}.tar.xz austin
 
+            cp ../include/libaustin.h .
+            cp .libs/libaustin.a .
+            tar -Jcf libaustin-$VERSION-gnu-linux-${{ matrix.arch }}.tar.xz libaustin.*
+
             mv austin-$VERSION-gnu-linux-${{ matrix.arch }}.tar.xz /artifacts
             mv austinp-$VERSION-gnu-linux-${{ matrix.arch }}.tar.xz /artifacts
             mv austin-$VERSION-musl-linux-${{ matrix.arch }}.tar.xz /artifacts
+            mv libaustin-$VERSION-gnu-linux-${{ matrix.arch }}.tar.xz /artifacts
             popd
 
       - name: Show artifacts
@@ -55,7 +60,7 @@ jobs:
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: artifacts/austin-*.tar.xz
+          file: artifacts/*austin-*.tar.xz
           tag: ${{ github.ref }}
           overwrite: true
           file_glob: true
