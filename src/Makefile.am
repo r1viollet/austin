@@ -35,11 +35,8 @@ undefine OPT_FLAGS
 undefine STRIP_FLAGS
 endif
 
-man_MANS = austin.1
 
-bin_PROGRAMS = austin
-
-noinst_LTLIBRARIES = libaustin.la
+noinst_LIBRARIES = libaustin.a
 
 # ---- Austin ----
 
@@ -57,18 +54,7 @@ austin_SOURCES = \
   py_thread.c
 
 
-# ---- Austin P ----
-
-if BUILD_AUSTINP
-bin_PROGRAMS += austinp
-
-austinp_SOURCES = $(austin_SOURCES)
-austinp_CFLAGS = $(austin_CFLAGS) @AUSTINP_CFLAGS@
-austinp_LDADD = @AUSTINP_LDADD@
-endif
-
-
 # ---- libaustin ----
 
-libaustin_la_CFLAGS = $(austin_CFLAGS) -DLIBAUSTIN
-libaustin_la_SOURCES = $(austin_SOURCES)
+libaustin_a_CFLAGS = $(austin_CFLAGS) -DLIBAUSTIN
+libaustin_a_SOURCES = $(austin_SOURCES)
